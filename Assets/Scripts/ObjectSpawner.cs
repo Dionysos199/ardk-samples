@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    public GameObject objectToSpawn;
+    int input;
+    public GameObject[] shapes;
+    private GameObject objectToSpawn;
     private string targetTag; // Set the tag of the surfaces where objects can be spawned
 
     private GameObject spawnedObject;
     private bool isTouching = false;
-
+    public void switchShape(int n)
+    {
+        input = n;
+    }
     void Update()
     {
         targetTag = "SpawnSurface";
@@ -46,7 +51,6 @@ public class ObjectSpawner : MonoBehaviour
 
                 case TouchPhase.Ended:
                     isTouching = false;
-                        // Open the native gallery to pick an image
                     break;
             }
         }
@@ -56,7 +60,7 @@ public class ObjectSpawner : MonoBehaviour
         // Update the position and rotation of the object based on the hit information
 
         // Translate the object 1 cm along its normal
-        Vector3 offset = normal.normalized * 0.1f;
+        Vector3 offset = normal.normalized * 0.01f;
         obj.transform.position = position + offset;
         
         // Rotate the object to align with the hit normal
@@ -64,12 +68,12 @@ public class ObjectSpawner : MonoBehaviour
     }
     GameObject SpawnObject(Vector3 position, Vector3 normal)
     {
+        objectToSpawn = shapes[input];
         // Instantiate the object at the hit position
         GameObject spawned = Instantiate(objectToSpawn, position, Quaternion.identity);
 
         // Rotate the spawned object to align with the hit normal
         spawned.transform.rotation = Quaternion.LookRotation(normal);
-
         return spawned;
     }
 }

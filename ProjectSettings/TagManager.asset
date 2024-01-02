@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Cube
   - SpawnSurface
+  - SpawnedObject
   layers:
   - Default
   - TransparentFX
