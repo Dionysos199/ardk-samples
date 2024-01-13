@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class TouchInputController : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class TouchInputController : MonoBehaviour
     private float scaleSensitivity = 8;
 
     private bool deleteMode = false;
+
+    [SerializeField]
+    private GameObject photoCanvas;
+    [SerializeField]
+    private Texture[] photos;
+    private GameObject lastSelectedObject;
+
     void Update()
     {
         if (Input.touchCount == 2)
@@ -33,7 +41,7 @@ public class TouchInputController : MonoBehaviour
             {
                 if (selectedObject != null)
                 {
-                    selectedObject.GetComponent<MeshRenderer>().material.color = Color.red; 
+                    //selectedObject.GetComponent<MeshRenderer>().material.color = Color.red; 
                     // Calculate pinch distance change
                     float currentPinchDistance = Vector2.Distance(touch1.position, touch2.position);
                     float pinchDelta = currentPinchDistance - initialPinchDistance;
@@ -71,18 +79,24 @@ public class TouchInputController : MonoBehaviour
                         Destroy(touchedObject);
                     }
                 }
+                else
+                {
+                    GameObject touchedObject = GetTouchedObject(touch.position);
+                    if (touchedObject != null)
+                    {
+                        if (touchedObject.CompareTag("SpawnedObject"))
+                        {
+                            Debug.Log("Start animation");
+                            slideInFn();
+                            lastSelectedObject = touchedObject;
+                        }
+                    }
+                }
             }
 
             if (touch.phase == TouchPhase.Ended)
             {
-                GameObject touchedObject = GetTouchedObject(touch.position);
-                if (touchedObject != null)
-                {
-                    if (touchedObject.CompareTag("SpawnedObject"))
-                    {
-                        addPhotoFn(touchedObject);
-                    }
-                }
+                
             }
         }
     }
@@ -111,21 +125,45 @@ public class TouchInputController : MonoBehaviour
         deleteMode = !deleteMode;
         Debug.Log("Delete Mode: " + deleteMode);
     }
-
-    public void addPhotoFn(GameObject spawnedObject)
+    public void slideInFn()
     {
-
-        NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
+        if (photoCanvas != null)
         {
-            if (path != null)
+            Animator animator = photoCanvas.GetComponent<Animator>();
+            if (animator != null)
             {
-                // Load the image from the selected path
-
-                Texture2D myTexture = NativeGallery.LoadImageAtPath(path);
-
-                // Apply the texture to the plane object
-                spawnedObject.GetComponent<Renderer>().material.mainTexture = myTexture;
+               animator.SetBool("slideIn", true);
             }
-        });
+        }
+    }
+    public void slideOutFn()
+    {
+        if (photoCanvas != null)
+        {
+            Animator animator = photoCanvas.GetComponent<Animator>();
+            if (animator != null)
+            {
+                animator.SetBool("slideIn", false);
+            }
+        }
+    }
+    public void addPhotoFn(int n)
+    {
+        if (photos[n] != null)
+        {
+            lastSelectedObject.GetComponent<MeshRenderer>().material.mainTexture = photos[n];
+        }
+        //NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
+        //{
+        //    if (path != null)
+        //    {
+        //        // Load the image from the selected path
+
+        //        Texture2D myTexture = NativeGallery.LoadImageAtPath(path);
+
+        //        // Apply the texture to the plane object
+        //        spawnedObject.GetComponent<Renderer>().material.mainTexture = myTexture;
+        //    }
+        //});
     }
 }
