@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Samples/Home/Scenes/Home.unity
+    path: Assets/Main scene/Home.unity
     guid: 1bba4cece25a3458f8d2983b1cd85e83
   - enabled: 1
     path: Assets/Samples/Depth/Scenes/Occlusion.unity
