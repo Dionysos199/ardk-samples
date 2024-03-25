@@ -1,0 +1,1 @@
+Built on top of Niantic ARDK. An location-based AR experience where people customize their own public bench whether with intimate or shared digital content.The main activity especially in this early prototype is being able to paint directly on th bench through your phone's screen.
