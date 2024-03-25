@@ -21,10 +21,10 @@
       "depth": 0,
       "source": "git",
       "dependencies": {
-        "com.nianticlabs.lightship": "3.1.0-231127183852",
+        "com.nianticlabs.lightship": "3.2.0-2401130645",
         "com.unity.netcode.gameobjects": "1.2.0"
       },
-      "hash": "c6d0d0f905a97f4d26d2d54b16462f9d0367ade1"
+      "hash": "afe1932733e26994c30cc59a3cb1f9d54e19af80"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",

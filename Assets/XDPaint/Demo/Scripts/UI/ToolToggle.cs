@@ -43,7 +43,7 @@ namespace XDPaint.Demo.UI
             PlayerPrefs.SetInt("XDPaintDemoTool", (int)tool);
             OnToolSwitched?.Invoke(tool);
         }
-
+         
         public void SetPaintManager(PaintManager paintManagerInstance)
         {
             paintManager = paintManagerInstance;
